@@ -1,0 +1,8 @@
+services:
+  hikari-gitbot:
+      build:
+          context: .
+          dockerfile: Dockerfile
+      environment:
+          TOKEN: ${TOKEN:?err}
+      restart: always

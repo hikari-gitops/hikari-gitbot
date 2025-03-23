@@ -1,0 +1,91 @@
+[project]
+name = "hikari-gitbot"
+version = "0.0.0"
+description = "A bot for managing GitHub issues and PRs on Discord."
+readme = "README.md"
+license = "GPL-3.0"
+authors = [
+    { name = "hypergonial", email = "git@hypergonial.com" },
+    { name = "rayakame", email = "github.android206@passmail.net" },
+]
+maintainers = [
+    { name = "hypergonial", email = "git@hypergonial.com" },
+    { name = "rayakame", email = "github.android206@passmail.net" },
+]
+requires-python = ">=3.13"
+dependencies = [
+    "hikari-arc>=2.0.0",
+    "hikari[speedups]>=2.2.0",
+    "python-dotenv>=1.0.1",
+]
+
+[dependency-groups]
+dev = [
+    "nox>=2025.2.9",
+    "pyright>=1.1.397",
+    "ruff>=0.11",
+    "typing-extensions>=4.12",
+    "uv>=0.6",
+    "colorama>=0.4.6; sys_platform == 'win32'",
+]
+
+[tool.ruff]
+exclude = ["build"]
+line-length = 120
+target-version = "py313"
+
+[tool.ruff.lint]
+select = [
+    "E",
+    "F",
+    "I",
+    "TCH",
+    "C",
+    "N",
+    "D2",
+    "D3",
+    "D415",
+    "D417",
+    "D418",
+    "D419",
+    "ASYNC",
+    "Q",
+    "RSE",
+    "SIM",
+    "RUF",
+]
+ignore = ["F405", "F403", "E501", "D205"]
+fixable = ["I", "TCH", "D", "RUF"]
+
+[tool.ruff.lint.isort]
+split-on-trailing-comma = false
+
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"
+
+[tool.ruff.format]
+skip-magic-trailing-comma = true
+
+[tool.slotscheck]
+strict-imports = true
+require-superclass = false
+require-subclass = true
+exclude-classes = ":.*(Exception|Error|Proto|AutocompleteData)"
+
+[tool.mypy]
+ignore_errors = true
+
+[tool.uv]
+required-version = "~=0.6"
+
+[tool.pyright]
+pythonVersion = "3.13"
+typeCheckingMode = "strict"
+reportPrivateUsage = false
+reportMissingTypeStubs = true
+reportUnnecessaryTypeIgnoreComment = "warning"
+reportUninitializedInstanceVariable = "error"
+reportShadowedImports = "warning"
+
+[tool.pytest.ini_options]
+asyncio_default_fixture_loop_scope = "function"
