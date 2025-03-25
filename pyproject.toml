@@ -17,6 +17,7 @@ dependencies = [
     "hikari-arc>=2.0.0",
     "hikari[speedups]>=2.2.0",
     "python-dotenv>=1.0.1",
+    "sqlc-asyncpg-compat",
 ]
 
 [dependency-groups]
@@ -77,6 +78,9 @@ ignore_errors = true
 
 [tool.uv]
 required-version = "~=0.6"
+
+[tool.uv.sources]
+sqlc-asyncpg-compat = { git = "https://github.com/tandemdude/sqlc-asyncpg-compat" }
 
 [tool.pyright]
 pythonVersion = "3.13"

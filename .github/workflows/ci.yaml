@@ -22,7 +22,7 @@ jobs:
 
       - name: Run ruff via nox
         run: |
-          uv run nox -s format
+          uv run nox -s format_check
 
   pyright:
     runs-on: ubuntu-latest

@@ -8,7 +8,7 @@ PATH_TO_PROJECT = os.path.join(".", "src")
 SCRIPT_PATHS = [PATH_TO_PROJECT, "noxfile.py"]
 
 options.default_venv_backend = "uv"
-options.sessions = ["format_fix", "pyright"]
+options.sessions = ["format", "pyright"]
 
 
 # uv_sync taken from: https://github.com/hikari-py/hikari/blob/master/pipelines/nox.py#L48
@@ -45,14 +45,14 @@ def uv_sync(
 
 
 @nox.session()
-def format_fix(session: nox.Session) -> None:
+def format(session: nox.Session) -> None:
     uv_sync(session, groups=["dev"])
     session.run("python", "-m", "ruff", "format", *SCRIPT_PATHS)
     session.run("python", "-m", "ruff", "check", *SCRIPT_PATHS, "--fix")
 
 
 @nox.session()
-def format(session: nox.Session) -> None:
+def format_check(session: nox.Session) -> None:
     uv_sync(session, groups=["dev"])
     session.run("python", "-m", "ruff", "format", *SCRIPT_PATHS, "--check")
     session.run("python", "-m", "ruff", "check", *SCRIPT_PATHS)
@@ -62,3 +62,11 @@ def format(session: nox.Session) -> None:
 def pyright(session: nox.Session) -> None:
     uv_sync(session, include_self=True, groups=["dev"])
     session.run("pyright", *SCRIPT_PATHS)
+
+@nox.session()
+def sqlc(session: nox.Session) -> None:
+    """Run sqlc to generate queries and dataclasses"""
+    # note: this required sqlc to be installed on the system.
+    # https://docs.sqlc.dev/en/latest/overview/install.html
+
+
