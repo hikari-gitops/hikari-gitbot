@@ -69,7 +69,14 @@ def sqlc(session: nox.Session) -> None:
     """Run sqlc to generate queries and dataclasses"""
     # note: this required sqlc to be installed on the system.
     # https://docs.sqlc.dev/en/latest/overview/install.html
-    session.run("sqlc generate", "-f", SQLC_CONFIG)
+    session.run("sqlc","generate", "-f", SQLC_CONFIG, external=True)
+
+@nox.session()
+def sqlc_verify(session: nox.Session) -> None:
+    # note: this required sqlc to be installed on the system.
+    # https://docs.sqlc.dev/en/latest/overview/install.html
+    session.run("sqlc", "diff", "-f", SQLC_CONFIG, external=True)
+
 
 
 
