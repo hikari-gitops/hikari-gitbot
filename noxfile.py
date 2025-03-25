@@ -6,6 +6,7 @@ from nox import options
 
 PATH_TO_PROJECT = os.path.join(".", "src")
 SCRIPT_PATHS = [PATH_TO_PROJECT, "noxfile.py"]
+SQLC_CONFIG = "sqlc.yaml"
 
 options.default_venv_backend = "uv"
 options.sessions = ["format", "pyright"]
@@ -68,5 +69,7 @@ def sqlc(session: nox.Session) -> None:
     """Run sqlc to generate queries and dataclasses"""
     # note: this required sqlc to be installed on the system.
     # https://docs.sqlc.dev/en/latest/overview/install.html
+    session.run("sqlc generate", "-f", SQLC_CONFIG)
+
 
 
