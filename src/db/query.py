@@ -9,7 +9,6 @@ import sqlalchemy.ext.asyncio
 
 from src.db import models
 
-
 CREATE_AUTHOR = """-- name: create_author \\:one
 INSERT INTO authors (
   name, bio
@@ -54,11 +53,7 @@ class AsyncQuerier:
         row = (await self._conn.execute(sqlalchemy.text(CREATE_AUTHOR), {"p1": name, "p2": bio})).first()
         if row is None:
             return None
-        return models.Author(
-            id=row[0],
-            name=row[1],
-            bio=row[2],
-        )
+        return models.Author(id=row[0], name=row[1], bio=row[2])
 
     async def delete_author(self, *, id: Any) -> None:
         await self._conn.execute(sqlalchemy.text(DELETE_AUTHOR), {"p1": id})
@@ -67,20 +62,12 @@ class AsyncQuerier:
         row = (await self._conn.execute(sqlalchemy.text(GET_AUTHOR), {"p1": id})).first()
         if row is None:
             return None
-        return models.Author(
-            id=row[0],
-            name=row[1],
-            bio=row[2],
-        )
+        return models.Author(id=row[0], name=row[1], bio=row[2])
 
     async def list_authors(self) -> AsyncIterator[models.Author]:
         result = await self._conn.stream(sqlalchemy.text(LIST_AUTHORS))
         async for row in result:
-            yield models.Author(
-                id=row[0],
-                name=row[1],
-                bio=row[2],
-            )
+            yield models.Author(id=row[0], name=row[1], bio=row[2])
 
     async def update_author(self, *, name: Any, bio: Optional[Any], id: Any) -> None:
         await self._conn.execute(sqlalchemy.text(UPDATE_AUTHOR), {"p1": name, "p2": bio, "p3": id})
